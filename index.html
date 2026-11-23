@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CineBook | Online Movie Ticket Booking</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- NAVIGATION BAR -->
+
+    <header class="navbar">
+
+        <div class="logo" onclick="showHome()">
+            <span class="logo-icon">🎬</span>
+            CineBook
+        </div>
+
+        <nav>
+            <button onclick="showHome()">Home</button>
+            <button onclick="showLogin()">Login</button>
+            <button onclick="showRegistration()">Register</button>
+        </nav>
+
+    </header>
+
+
+    <!-- HOME SECTION -->
+
+    <section id="homeSection" class="hero-section">
+
+        <div class="hero-content">
+
+            <h1>Experience Movies Like Never Before</h1>
+
+            <p>
+                Book your favourite movies, choose your seats
+                and enjoy an unforgettable cinema experience.
+            </p>
+
+            <button class="primary-btn" onclick="showLogin()">
+                Book Your Tickets
+            </button>
+
+            <button class="secondary-btn" onclick="showRegistration()">
+                Create Account
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- LOGIN SECTION -->
+
+    <section id="loginSection" class="form-section" hidden>
+
+        <div class="form-card">
+
+            <h2>Customer Login</h2>
+
+            <p>Login to continue booking your movie tickets.</p>
+
+            <form id="loginForm">
+
+                <label for="loginEmail">Email Address</label>
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="loginPassword">Password</label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                    required
+                >
+
+                <button type="submit" class="primary-btn">
+                    Login
+                </button>
+
+            </form>
+
+            <p id="loginMessage" class="message"></p>
+
+            <p>
+                Don't have an account?
+                <a href="#" onclick="showRegistration(); return false;">
+                    Register here
+                </a>
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- REGISTRATION SECTION -->
+
+    <section id="registrationSection" class="form-section" hidden>
+
+        <div class="form-card">
+
+            <h2>Create Your Account</h2>
+
+            <p>Join CineBook and start booking your tickets.</p>
+
+            <form id="registrationForm">
+
+                <label for="customerName">Full Name</label>
+
+                <input
+                    type="text"
+                    id="customerName"
+                    placeholder="Enter your full name"
+                    required
+                >
+
+                <label for="customerEmail">Email Address</label>
+
+                <input
+                    type="email"
+                    id="customerEmail"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="customerPhone">Phone Number</label>
+
+                <input
+                    type="tel"
+                    id="customerPhone"
+                    placeholder="Enter 10-digit phone number"
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    required
+                >
+
+                <label for="customerPassword">Password</label>
+
+                <input
+                    type="password"
+                    id="customerPassword"
+                    placeholder="Minimum 6 characters"
+                    minlength="6"
+                    required
+                >
+
+                <button type="submit" class="primary-btn">
+                    Register
+                </button>
+
+            </form>
+
+            <p id="registrationMessage" class="message"></p>
+
+            <p>
+                Already registered?
+                <a href="#" onclick="showLogin(); return false;">
+                    Login here
+                </a>
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- CUSTOMER DASHBOARD -->
+
+    <section id="dashboardSection" class="dashboard-section" hidden>
+
+        <div class="dashboard-content">
+
+            <h1 id="dashboardWelcome">Welcome to CineBook!</h1>
+
+            <p>
+                Your next movie experience is just a few clicks away.
+            </p>
+
+            <div class="dashboard-actions">
+
+                <button
+                    class="primary-btn"
+                    onclick="openMovies()"
+                >
+                    Browse Movies
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="logoutCustomer()"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- My Bookings is added by script.js -->
+
+    </section>
+
+
+    <!-- MOVIES SECTION -->
+
+    <section id="moviesSection" class="movies-section" hidden>
+
+        <div class="section-heading">
+
+            <h2>Now Showing</h2>
+
+            <p>Choose a movie and book your seats.</p>
+
+        </div>
+
+        <div id="movieContainer" class="movie-container">
+
+            <p>Loading movies...</p>
+
+        </div>
+
+        <button class="secondary-btn" onclick="showDashboard()">
+            Back to Dashboard
+        </button>
+
+    </section>
+
+
+    <!-- BOOKING SECTION -->
+
+    <section id="bookingSection" class="booking-section" hidden>
+
+        <div class="section-heading">
+
+            <h2>Book Your Tickets</h2>
+
+            <p id="selectedMovieTitle"></p>
+
+        </div>
+
+
+        <!-- SHOW DETAILS -->
+
+        <div class="booking-card">
+
+            <h3>Select Your Show</h3>
+
+            <div class="booking-fields">
+
+                <div class="field-group">
+
+                    <label for="showDate">Select Date</label>
+
+                    <input
+                        type="date"
+                        id="showDate"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field-group">
+
+                    <label for="showTime">Select Showtime</label>
+
+                    <select id="showTime" required>
+
+                        <option value="">Choose Showtime</option>
+
+                        <option value="10:00 AM">10:00 AM</option>
+
+                        <option value="01:00 PM">01:00 PM</option>
+
+                        <option value="04:00 PM">04:00 PM</option>
+
+                        <option value="07:00 PM">07:00 PM</option>
+
+                        <option value="10:00 PM">10:00 PM</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field-group">
+
+                    <label for="screen">Select Screen</label>
+
+                    <select id="screen" required>
+
+                        <option value="">Choose Screen</option>
+
+                        <option value="Screen 1">Screen 1</option>
+
+                        <option value="Screen 2">Screen 2</option>
+
+                        <option value="Screen 3">Screen 3</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <button
+                type="button"
+                id="continueToSeats"
+                class="primary-btn"
+            >
+                Continue to Seat Selection
+            </button>
+
+        </div>
+
+
+        <!-- SEAT SELECTION SECTION -->
+
+        <div id="seatSelectionSection" class="booking-card" hidden>
+
+            <h3>Select Your Seats</h3>
+
+            <p class="seat-instruction">
+                Select between 1 and 4 seats.
+            </p>
+
+
+            <div class="screen-display">
+
+                <div class="screen-line"></div>
+
+                <p>SCREEN</p>
+
+            </div>
+
+
+            <!-- SEAT LEGEND -->
+
+            <div class="seat-legend">
+
+                <div class="legend-item">
+
+                    <span class="legend-seat available-seat"></span>
+
+                    <span>Available</span>
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span class="legend-seat selected-seat"></span>
+
+                    <span>Selected</span>
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span class="legend-seat booked-seat"></span>
+
+                    <span>Booked</span>
+
+                </div>
+
+            </div>
+
+
+            <!-- SEAT GRID -->
+
+            <div id="seatContainer" class="seat-container">
+
+            </div>
+
+
+            <!-- SEAT PRICING -->
+
+            <div class="seat-pricing">
+
+                <h4>Ticket Pricing</h4>
+
+                <p>Rows A and B: ₹150 per seat</p>
+
+                <p>Rows C and D: ₹250 per seat</p>
+
+                <p>Row E: ₹500 per seat</p>
+
+            </div>
+
+
+            <!-- BOOKING SUMMARY -->
+
+            <div class="booking-summary">
+
+                <h4>Booking Summary</h4>
+
+                <p>
+                    Selected Seats:
+                    <span id="selectedSeatsDisplay">
+                        No seats selected
+                    </span>
+                </p>
+
+                <p>
+                    Total Amount:
+                    <strong id="totalAmount">₹0</strong>
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="continueToPayment"
+                class="primary-btn"
+            >
+                Continue to Payment
+            </button>
+
+        </div>
+
+
+        <!-- PAYMENT SECTION -->
+
+        <div id="paymentSection" class="booking-card payment-card" hidden>
+
+            <h3>Payment Details</h3>
+
+            <p>Select your preferred online payment method.</p>
+
+
+            <div class="field-group">
+
+                <label for="paymentMethod">
+                    Payment Method
+                </label>
+
+                <select id="paymentMethod" required>
+
+                    <option value="">
+                        Select payment method
+                    </option>
+
+                    <option value="UPI">
+                        UPI — Google Pay / PhonePe / Paytm
+                    </option>
+
+                    <option value="CARD">
+                        Debit / Credit Card
+                    </option>
+
+                    <option value="NETBANKING">
+                        Net Banking
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <p class="payment-note">
+                Demo payment only. No real money will be charged.
+            </p>
+
+
+            <div class="payment-buttons">
+
+                <button
+                    type="button"
+                    id="backToSeats"
+                    class="secondary-btn"
+                >
+                    Back to Seats
+                </button>
+
+                <button
+                    type="button"
+                    id="confirmBooking"
+                    class="primary-btn"
+                >
+                    Pay Securely & Confirm Booking
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- DIGITAL TICKET / BOOKING CONFIRMATION -->
+
+        <div
+            id="bookingConfirmation"
+            class="booking-confirmation"
+            hidden
+        >
+
+            <!--
+                The complete digital ticket is generated
+                dynamically by script.js after booking.
+            -->
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <h3>CineBook</h3>
+
+            <p>
+                Your one-stop destination for online movie ticket booking.
+            </p>
+
+            <p>
+                © 2026 CineBook. All Rights Reserved.
+            </p>
+
+            <p class="footer-disclaimer">
+                This is an academic demonstration project.
+                Payments are simulated.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
